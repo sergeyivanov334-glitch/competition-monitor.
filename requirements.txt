@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+openai
+httpx
+python-multipart
+beautifulsoup4
+pydantic-settings
+python-dotenv
+playwright
+selenium

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Competition Monitor</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-mark">C</div>
+        <div>
+          <strong>Competition</strong>
+          <span>монитор конкурентов</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <button class="nav-btn active" data-tab="monitor" type="button">Сайты конкурентов</button>
+        <button class="nav-btn" data-tab="text" type="button">Анализ текста</button>
+        <button class="nav-btn" data-tab="image" type="button">Анализ изображений</button>
+        <button class="nav-btn" data-tab="parse" type="button">Парсинг сайта</button>
+        <button class="nav-btn" data-tab="history" type="button">История</button>
+      </nav>
+      <p class="sidebar-note">Проверка сайтов — раз в сутки, пока приложение запущено.</p>
+    </aside>
+
+    <main class="main">
+      <header class="header">
+        <h1>Competition Monitor</h1>
+        <p>У каждого сайта свой разбор. Изменения этого сайта копятся под его карточкой вместе с датой.</p>
+      </header>
+
+      <section class="tab active" id="tab-monitor">
+        <form class="card" id="monitor-form">
+          <h2>Сайты конкурентов</h2>
+          <p class="hint">3–5 адресов. Первый запуск фиксирует разбор по параметрам из кода. Дальше проверка идёт раз в сутки: отличия появляются под карточкой этого конкурента вместе с датой.</p>
+          <label class="field-label" for="niche-input">Ниша</label>
+          <input id="niche-input" type="text" placeholder="Например, полиграфия">
+          <input class="competitor-url" type="text" placeholder="Сайт 1">
+          <input class="competitor-url" type="text" placeholder="Сайт 2">
+          <input class="competitor-url" type="text" placeholder="Сайт 3">
+          <input class="competitor-url" type="text" placeholder="Сайт 4">
+          <input class="competitor-url" type="text" placeholder="Сайт 5">
+          <p class="hint" id="schedule-label"></p>
+          <button class="btn" type="submit">Проанализировать сейчас</button>
+        </form>
+        <div id="competitors"></div>
+      </section>
+
+      <section class="tab" id="tab-text">
+        <form class="card" id="text-form">
+          <h2>Текст конкурента</h2>
+          <p class="hint">Описание продукта, лендинг или рекламное объявление. Минимум 10 символов.</p>
+          <textarea id="competitor-text" name="text" rows="9" required minlength="10" placeholder="Вставьте текст конкурента…"></textarea>
+          <button class="btn" type="submit">Проанализировать</button>
+        </form>
+      </section>
+
+      <section class="tab" id="tab-image">
+        <form class="card" id="image-form">
+          <h2>Изображение</h2>
+          <p class="hint">Баннер, скриншот сайта или упаковка. PNG, JPG, GIF, WEBP до 10 МБ.</p>
+          <label class="dropzone" id="dropzone">
+            <input id="image-input" type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
+            <span id="drop-label">Перетащите файл или нажмите, чтобы выбрать</span>
+            <img id="image-preview" alt="" hidden>
+          </label>
+          <button class="btn" id="image-submit" type="submit" disabled>Проанализировать</button>
+        </form>
+      </section>
+
+      <section class="tab" id="tab-parse">
+        <form class="card" id="parse-form">
+          <h2>Страница конкурента</h2>
+          <p class="hint">Selenium откроет страницу в Chrome и снимет текст со скриншотом.</p>
+          <input id="url-input" type="text" placeholder="https://example.com" required>
+          <button class="btn" type="submit">Собрать страницу и проанализировать</button>
+        </form>
+      </section>
+
+      <section class="tab" id="tab-history">
+        <div class="card">
+          <div class="row">
+            <div>
+              <h2>История</h2>
+              <p class="hint">Последние 10 запросов.</p>
+            </div>
+            <button class="btn ghost" id="clear-history" type="button">Очистить</button>
+          </div>
+          <div id="history-list" class="history-list"></div>
+        </div>
+      </section>
+
+      <section class="card results" id="results" hidden>
+        <div class="row">
+          <h2>Результат</h2>
+          <button class="btn ghost" id="close-results" type="button">Закрыть</button>
+        </div>
+        <div id="results-body"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="overlay" id="overlay" hidden>
+    <div class="spinner"></div>
+    <p>Анализирую…</p>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
